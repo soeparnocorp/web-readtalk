@@ -1,1 +1,1 @@
-FROM node:18-bullseyee
+FROM node:18-bullseye
