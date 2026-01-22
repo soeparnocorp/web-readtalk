@@ -1,5 +1,5 @@
 // Place any global data in this file.
 // You can import this data from anywhere in your site by using the `import` keyword.
 
-export const SITE_TITLE = 'SOEPARNO ENTERPRISE';
-export const SITE_DESCRIPTION = 'Welcome to SOEPARNO ENTERPRISE Corp.';
+export const SITE_TITLE = 'READTalk Messenger';
+export const SITE_DESCRIPTION = 'Welcome to READTalk Inc.';
