@@ -1,55 +1,37 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-
-// Contoh data user statis
-const profile = {
-  username: 'readtalk',
-  displayName: 'ReadTalk Official',
-  avatar: '/assets/avatar-readtalk.png',
-  bio: 'Welcome to ReadTalk – the place to share your thoughts & links!',
-  links: [
-    { label: 'Twitter', url: 'https://twitter.com/readtalk' },
-    { label: 'GitHub', url: 'https://github.com/readtalk' },
-    { label: 'Portfolio', url: 'https://readtalk.dev' },
-  ],
-};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={`@${profile.username} | ${SITE_TITLE}`} description={profile.bio} />
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      main {
+        padding: 0;
+      }
+      .status-frame {
+        width: 100%;
+        height: calc(100vh - 120px); /* sesuaikan tinggi header+footer */
+        border: 0;
+      }
+    </style>
   </head>
   <body>
     <Header />
-    <main style="text-align:center; padding:2rem;">
-      <!-- Avatar -->
-      <img
-        src={profile.avatar}
-        alt={`Avatar of ${profile.displayName}`}
-        style="width:100px; height:100px; border-radius:50%; margin-bottom:1rem;"
-      />
-      <!-- Display Name & Username -->
-      <h1>{profile.displayName}</h1>
-      <h2 style="color:gray; font-weight:normal">@{profile.username}</h2>
-      <!-- Bio -->
-      <p style="max-width:600px; margin:1rem auto;">{profile.bio}</p>
-      <!-- Links -->
-      <div style="margin-top:2rem; display:flex; flex-direction:column; gap:1rem; align-items:center;">
-        {profile.links.map(link => (
-          <a
-            href={link.url}
-            target="_blank"
-            style="padding:0.8rem 1.5rem; background-color:#4f46e5; color:white; border-radius:12px; text-decoration:none; width:200px; text-align:center;"
-          >
-            {link.label}
-          </a>
-        ))}
-      </div>
+
+    <main>
+      <iframe
+        class="status-frame"
+        src="https://soeparnocorp.statuspage.io"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+      ></iframe>
     </main>
+
     <Footer />
   </body>
 </html>
