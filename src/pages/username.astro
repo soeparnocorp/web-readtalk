@@ -1,0 +1,61 @@
+---
+// src/pages/[username].astro
+const { params, site } = Astro;
+const username = params.username;
+
+// Ambil data user dari KV (USER_KV sama dengan To-Do-List/OpenAuth)
+const userKey = `user:${username}`;
+const userData = await USER_KV.get(userKey, { type: "json" });
+
+if (!userData) {
+  throw new Error(`User ${username} not found`);
+}
+
+const { name, bio, profilePictureUrl, links, updatedAt } = userData;
+---
+
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{name} | SoeparnoCorp</title>
+    <meta name="description" content={bio} />
+    <link rel="canonical" href={`${site}/@${username}`} />
+
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "{name}",
+      "url": "{site}/@{username}",
+      "image": "{profilePictureUrl}",
+      "description": "{bio}",
+      "sameAs": [{links.map(link => `"${link.url}"`).join(",")}]
+    }
+    </script>
+
+    <style>
+      body { font-family: system-ui, sans-serif; background: #f9f9f9; color: #111; padding: 2rem; }
+      .profile { max-width: 600px; margin: auto; text-align: center; }
+      .profile img { border-radius: 50%; width: 120px; height: 120px; }
+      .links a { display: block; margin: 0.5rem 0; color: #1a73e8; text-decoration: none; }
+      .links a:hover { text-decoration: underline; }
+      small { display: block; margin-top: 1rem; color: #666; }
+    </style>
+  </head>
+  <body>
+    <div class="profile">
+      <img src={profilePictureUrl} alt={name} />
+      <h1>{name}</h1>
+      <p>{bio}</p>
+      <div class="links">
+        {links.map(link => (
+          <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>
+        ))}
+      </div>
+      <small>Last updated: {new Date(updatedAt).toLocaleDateString()}</small>
+    </div>
+  </body>
+</html>
